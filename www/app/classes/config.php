@@ -1,5 +1,13 @@
 <?php
 
+/**
+*
+* This is a classic config class. It takes every json file stored in
+* CONFIG_FOLDER and store in in a static array. You can use it by only calling
+* \App\Cong::get($config_key) to retrieve a value.
+*
+*/
+
 namespace App;
 
 class Config
@@ -26,6 +34,10 @@ class Config
         }
     }
 
+    /**
+    * This is the main method. It returns a value stored in json config file.
+    * The key have to be separated by a dot (.) to browse file structure.
+    */
     public static function get($key)
     {
         if (!isset($_instance)) {
