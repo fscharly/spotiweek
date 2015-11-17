@@ -23,4 +23,4 @@ It must look like this :
 }
 ```
 
-You can get api_token and api_secret from [https://developer.spotify.com](https://developer.spotify.com).
+You can get *client_id* and *client_secret* from [https://developer.spotify.com](https://developer.spotify.com).
