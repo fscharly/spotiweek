@@ -13,6 +13,9 @@ The goal of this project is not to disrupt the entire music industry ;). It's ju
 And having fun by building a simple (but very well architectured ! ;) ) application.
 
 ## Install
+Nothing special, just take the *www* folder and drop it on an apache server.
+
+## Configure
 Create a config file named *api_token.json* in *www/app/config/*.
 
 It must look like this :
