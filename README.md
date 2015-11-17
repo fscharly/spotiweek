@@ -1,4 +1,4 @@
-# spotify-weekly
+# Spotify Weekly
 [Spotify Discover](https://press.spotify.com/it/2015/07/20/introducing-discover-weekly-your-ultimate-personalised-playlist/) give weekly playlist of songs you may like. This playlist disappear every Monday. This is a web-app that copy your weekly recommendations in a "normal" playlist so you can edit it and keep it forever.
 
 ## Project
@@ -10,7 +10,7 @@ The goal of this project is not to disrupt the entire music industry ;). It's ju
 * Github
 * Markdown
 
-And having fun by building a simple (but well architectured ;) ) application !
+And having fun by building a simple (but very well architectured ! ;) ) application.
 
 ## Install
 Create a config file named *api_token.json* in *www/app/config/*.
