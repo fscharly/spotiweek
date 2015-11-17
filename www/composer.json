@@ -5,8 +5,6 @@
 		"smarty/smarty": "^3.1"
 	},
 	"autoload" : {
-		"classmap" : [
-			"app/classes"
-		]
+		"psr-4" : {"App\\" : "app/classes"}
 	}
 }

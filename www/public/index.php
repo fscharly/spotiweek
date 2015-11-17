@@ -14,6 +14,7 @@ $view = $app->view();
 $view->parserCompileDirectory = dirname(__FILE__) . '/../template_compiled';
 
 $app->get('/', function () use ($app) {
+    //var_dump(\App\Config::get('hello'));
     $app->render('index.tpl');
 });
 
