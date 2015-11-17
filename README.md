@@ -9,6 +9,7 @@ The goal of this project is not to disrupt the entire music industry ;). It's ju
 * Composer
 * Github
 * Markdown
+
 And having fun by building a simple (but well architectured ;) ) application !
 
 ## Install
