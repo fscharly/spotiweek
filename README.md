@@ -1,5 +1,5 @@
 # Spotify Weekly
-[Spotify Discover](https://press.spotify.com/it/2015/07/20/introducing-discover-weekly-your-ultimate-personalised-playlist/) gives weekly playlist of songs you may like. This playlist disappears every Monday. This is a web-app that copy your weekly recommendations in a "normal" playlist so you can edit it and keep it forever.
+[Spotify Discover](https://press.spotify.com/it/2015/07/20/introducing-discover-weekly-your-ultimate-personalised-playlist/) gives weekly playlist of songs you may like. This playlist disappears every Monday. This is a web-app that copy your weekly recommendations in a classic playlist so you can edit it and keep it forever.
 
 ## Project
 The goal of this project is not to disrupt the entire music industry ;). It's just a way to explore :
