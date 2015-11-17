@@ -3,11 +3,13 @@
 
 ## Install
 Create a config file named *api_token.json* in *www/app/config/*
-It must look like this
+
+It must look like this :
 ```
 {
     "client_id" : "Spotify client id",
     "client_secret" : "Spotify client secret"
 }
 ```
-You can get api_token and api_secret from [https://developer.spotify.com](https://developer.spotify.com)
+
+You can get api_token and api_secret from [https://developer.spotify.com](https://developer.spotify.com).
