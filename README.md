@@ -2,7 +2,7 @@
 "Spotify Discover" give weekly playlist of songs you may like. This playlist disappear every Monday. This is a web-app that copy your weekly recommendations in a "normal" playlist so you can edit it and keep it forever.
 
 ## Install
-Create a config file named *api_token.json* in *www/app/config/*
+Create a config file named *api_token.json* in *www/app/config/*.
 
 It must look like this :
 ```
