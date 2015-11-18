@@ -1,0 +1,11 @@
+body {
+    background-color: #000000;
+}
+
+.head {
+    color: #FFFFFF;
+}
+
+.panel-disable {
+    opacity: 0.4;
+}
