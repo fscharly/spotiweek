@@ -4,6 +4,7 @@
     <h1>Welcome on spotify-weekly</h1>
     <p>If you want to save you "Spotify Discover Weekly" playlist as a simple playlist that you can edit and keep forever, pleas connect with spotify</p>
 </div>
+<hr />
 <div class="row">
     <div class="col-md-4">
         <div class="panel panel-primary">
