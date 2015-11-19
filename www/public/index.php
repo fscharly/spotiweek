@@ -2,6 +2,8 @@
 
 require '../vendor/autoload.php';
 
+\App\Session::init();
+
 $app = new \Slim\Slim(array(
     'view' => new \Slim\Views\Smarty()
 ));
@@ -30,23 +32,38 @@ $app->get('/authentification/callback', function() use ($app) {
     if ($app->request->get('code', false)) {
         \App\Session::set('spotify_code', $app->request->get('code'));
         $app->setCookie('spotify_code', $app->request->get('code'));
-        $app->redirect('/');
+    } else {
+        \App\Session::init();
+        $error = $app->request->get('error', false);
+        if ($error && $error == 'access_denied') {
+            $app->flash('error', 'Please grant access to your Spotify Account.');
+        } else {
+            $app->flash('error', 'Oops, an unknown error occured.');
+        }
     }
+    $app->redirect('/');
 });
 
 /**
 * Check if a code is available in session or cookie
 */
-$app->get('/api/isregister', function () use ($app) {
-    $isRegister = false;
-
+$app->get('/api/islogin', function () use ($app) {
+    $data = array('is_login' => false);
     if (\App\Session::get('spotify_code')) {
-        $isRegister = true;
+        $data['is_login'] = true;
     } else if ($app->getCookie('spotify_code', false)) {
         \App\Session::set('spotify_code', $app->getCookie('spotify_code'));
-        $isRegister = true;
+        $data['is_login'] = true;
     }
-    \App\Response::json_response(array('is_register' => $isRegister));
+    \App\Response::json_response($data);
+});
+
+/**
+* Clear session and cookies
+*/
+$app->get('/api/logout', function () use ($app) {
+    \App\Session::set('spotify_code', false);
+    $app->deleteCookie('spotify_code');
 });
 
 /**

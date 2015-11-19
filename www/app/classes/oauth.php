@@ -23,6 +23,7 @@ class Oauth
             'client_id' => $client_id,
             'scope' => urlencode($scopes),
             'redirect_uri' => urlencode($redirect_uri),
+            'show_dialog' => 'true',
         );
         $data = array();
         foreach ($param as $key => $value) {

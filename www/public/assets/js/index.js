@@ -1,24 +1,34 @@
-function isRegister(callback) {
-    $.get('/api/isregister', function(data) {
-        console.log(data);
-    });
-}
+var spotiweekApp = angular.module('spotiweekApp', []);
 
-function openLogInPopup() {
-    $.get('/api/get_authentification_url', function (data) {
-        window.location.href = data.url;
-    });
-}
+spotiweekApp.controller('spotiweekController', function($scope, $http) {
+    $scope.is_login = false;
 
-$(document).ready(function () {
-    $('.open-login-popup').click(function () {
-        openLogInPopup();
-    })
-    isRegister(function (isRegister) {
-        if (isRegister) {
-            $('.step-2, .step-3').removeClass('panel-disable');
-        } else {
-            $('.step-2, .step-3').addClass('panel-disable');
-        }
-    });
+    $scope.init = function () {
+        $scope.isRegister();
+    }
+
+    $scope.isRegister = function () {
+        $http.get('/api/islogin').success(function(data) {
+            $scope.is_login = data.is_login;
+            if (data.is_login) {
+                $scope.step1_text = "Thank you for trusting us.";
+                $('.step-2, .step-3').removeClass('panel-disable');
+            } else {
+                $scope.step1_text = "Grant access to your spotify account.";
+                $('.step-2, .step-3').addClass('panel-disable');
+            }
+        });
+    }
+
+    $scope.logout = function() {
+        $http.get('/api/logout').success(function (data) {
+            $scope.isRegister();
+        })
+    }
+
+    $scope.login = function() {
+        $http.get('/api/get_authentification_url').success(function (data) {
+            window.location.href = data.url;
+        })
+    }
 });

@@ -15,11 +15,16 @@ class Session
         session_start();
     }
 
-    public static function set($key, $value)
+    public static function init()
     {
         if (!isset(self::$_instance)) {
             self::$_instance = new \App\Session();
         }
+    }
+
+    public static function set($key, $value)
+    {
+        self::init();
         $_SESSION[$key] = $value;
     }
 
@@ -28,13 +33,10 @@ class Session
     */
     public static function get($key, $default_value = false)
     {
-        if (!isset(self::$_instance)) {
-            self::$_instance = new \App\Session();
-        }
+        self::init();
         if (isset($_SESSION[$key])) {
             return $_SESSION[$key];
         }
         return $default_value;
     }
-
 }

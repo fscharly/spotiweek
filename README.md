@@ -1,4 +1,4 @@
-# Spotify Weekly
+# SpotiWeek
 [Spotify Discover](https://press.spotify.com/it/2015/07/20/introducing-discover-weekly-your-ultimate-personalised-playlist/) gives weekly playlist of songs you may like. This playlist disappears every Monday. This is a web-app that copy your weekly recommendations in a classic playlist so you can edit it and keep it forever.
 
 ## Project
@@ -6,6 +6,7 @@ The goal of this project is not to disrupt the entire music industry ;). It's ju
 * [Slim framework](http://www.slimframework.com)
 * [Spotify API](https://developer.spotify.com/web-api/)
 * O-Auth authentication
+* [Angular JS](https://angularjs.org)
 * Composer
 * Github
 * Markdown

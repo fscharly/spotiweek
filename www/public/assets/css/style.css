@@ -9,3 +9,7 @@ body {
 .panel-disable {
     opacity: 0.4;
 }
+
+.green-spotify-text {
+    color: #2FD566;
+}
