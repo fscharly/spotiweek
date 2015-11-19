@@ -27,4 +27,4 @@ It must look like this :
 }
 ```
 
-You can get *client_id* and *client_secret* from [https://developer.spotify.com](https://developer.spotify.com).
+You can get *client_id* and *client_secret* from [https://developer.spotify.com](https://developer.spotify.com) by creating an app. Don't forget to add *http://yourhost.com/authentification/callback* as a trusted callback URL.
