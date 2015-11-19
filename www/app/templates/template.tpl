@@ -16,8 +16,13 @@
 
         <link rel="stylesheet" href="/assets/css/style.css">
     </head>
-    <body ng-controller="spotiweekController" ng-init="init()">
+    <body>
         <div class="container">
+            <div class="head">
+                <h1>Welcome on <span class="primary-text">Spoti</span>Week</h1>
+                <p>Spotify Discover gives weekly playlist of songs you may like. This playlist disappears every Monday. Herre you can copy your weekly recommendations in a classic playlist so you can edit it and keep it forever.</p>
+            </div>
+            <hr />
             {block name=content}Default Content{/block}
         </div>
     </body>

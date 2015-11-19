@@ -23,6 +23,13 @@ $app->get('/', function () use ($app) {
 });
 
 /**
+* Display when user unregister from the service
+*/
+$app->get('/bye', function () use ($app) {
+    $app->render('bye.tpl');
+});
+
+/**
 * Page where the User is redirected after login on spotify service. It retrieve
 * and store a code used to get an access token to spotify. As the login page
 * is open in a popup, the page close the popup and move the app interface

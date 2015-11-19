@@ -1,14 +1,9 @@
 {extends file="template.tpl"}
 {block name=content}
-<div class="head">
-    <h1>Welcome on <span class="primary-text">Spoti</span>Week</h1>
-    <p>Spotify Discover gives weekly playlist of songs you may like. This playlist disappears every Monday. Herre you can copy your weekly recommendations in a classic playlist so you can edit it and keep it forever.</p>
-</div>
-<hr />
 {if isset($flash.error)}
 <div class="alert alert-danger" role="alert">{$flash.error}</div>
 {/if}
-<div class="row">
+<div class="row" ng-controller="spotiweekController" ng-init="init()">
     <div class="col-md-4">
         <div class="panel panel-primary step-1">
             <div class="panel-heading">Step 1 : Connect with Spotify</div>
