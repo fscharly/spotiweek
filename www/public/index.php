@@ -70,7 +70,7 @@ $app->get('/api/logout', function () use ($app) {
 * Get Spotify login page URL with correct scope.
 */
 $app->get('/api/get_authentification_url', function() {
-    $client_id = \App\Config::get('api_token.client_id');
+    $client_id = \App\Config::get('spotify.client_id');
     $redirect_uri = 'http://'.$_SERVER['HTTP_HOST'].'/authentification/callback';
     $scopeArray = array(
         'playlist-read-private',

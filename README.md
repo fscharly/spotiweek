@@ -17,7 +17,7 @@ And having fun by building a simple (but very well architectured ! ;) ) applicat
 Nothing special, just take the *www* folder and drop it on an apache server.
 
 ## Configure
-Create a config file named *api_token.json* in *www/app/config/*.
+Create a config file named *spotify.json* in *www/app/config/*.
 
 It must look like this :
 ```
