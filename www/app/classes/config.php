@@ -12,7 +12,7 @@ class Config
 {
     const CONFIG_FOLDER = '../config/';
 
-    private static $_instance = null;
+    private static $_instance = false;
 
     private $_config_content;
 
@@ -48,7 +48,7 @@ class Config
     */
     public static function get($key)
     {
-        if (!isset(self::$_instance)) {
+        if (self::$_instance === false) {
             self::$_instance = new \App\Config();
         }
         $path = explode('.', $key);

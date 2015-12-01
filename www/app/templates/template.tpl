@@ -2,6 +2,7 @@
 <html ng-app="spotiweekApp">
     <head>
         <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
 
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
@@ -19,7 +20,7 @@
     <body>
         <div class="container">
             <div class="head">
-                <h1>Welcome on <span class="primary-text">Spoti</span>Week</h1>
+                <h1>Welcome on <span class="text-primary">Spoti</span>Week</h1>
                 <p>Spotify Discover gives weekly playlist of songs you may like. This playlist disappears every Monday. Herre you can copy your weekly recommendations in a classic playlist so you can edit it and keep it forever.</p>
             </div>
             <hr />

@@ -37,8 +37,15 @@ $app->get('/bye', function () use ($app) {
 */
 $app->get('/authentification/callback', function() use ($app) {
     if ($app->request->get('code', false)) {
-        \App\Session::set('spotify_code', $app->request->get('code'));
-        $app->setCookie('spotify_code', $app->request->get('code'));
+        try {
+            \App\OAuth::getInstance(
+                \App\Config::get('spotify.client_id'),
+                \App\Config::get('spotify.client_secret')
+            )->login($app->request->get('code'));
+        } catch (\Exception $e) {
+            \App\Session::init();
+            $app->flash('error', $e->getMessage());
+        }
     } else {
         \App\Session::init();
         $error = $app->request->get('error', false);
@@ -52,42 +59,174 @@ $app->get('/authentification/callback', function() use ($app) {
 });
 
 /**
-* Check if a code is available in session or cookie
+* Clear session
 */
-$app->get('/api/islogin', function () use ($app) {
-    $data = array('is_login' => false);
-    if (\App\Session::get('spotify_code')) {
-        $data['is_login'] = true;
-    } else if ($app->getCookie('spotify_code', false)) {
-        \App\Session::set('spotify_code', $app->getCookie('spotify_code'));
-        $data['is_login'] = true;
-    }
-    \App\Response::json_response($data);
+$app->get('/api/logout', function () use ($app) {
+    \App\Oauth::logOut();
 });
 
 /**
-* Clear session and cookies
+* Check if a spotify code is available in session
 */
-$app->get('/api/logout', function () use ($app) {
-    \App\Session::set('spotify_code', false);
-    $app->deleteCookie('spotify_code');
+$app->get('/api/is_auth', function () use ($app) {
+    $data = array('is_auth' => \App\Oauth::getInstance(
+        \App\Config::get('spotify.client_id'),
+        \App\Config::get('spotify.client_secret')
+    )->isAuth());
+    \App\Response::json_response($data);
 });
 
 /**
 * Get Spotify login page URL with correct scope.
 */
 $app->get('/api/get_authentification_url', function() {
-    $client_id = \App\Config::get('spotify.client_id');
-    $redirect_uri = 'http://'.$_SERVER['HTTP_HOST'].'/authentification/callback';
-    $scopeArray = array(
-        'playlist-read-private',
-        'playlist-read-collaborative',
-        'playlist-modify-public',
-        'playlist-modify-private'
+    $oAuth = \App\Oauth::getInstance(
+        \App\Config::get('spotify.client_id'),
+        \App\Config::get('spotify.client_secret')
     );
-    $scopes = implode(' ', $scopeArray);
-    $url = \App\Oauth::getAuthorizeUrl($client_id, $redirect_uri, $scopes);
-    \App\Response::json_response(array('url' => $url));
+    try {
+        \App\Response::json_response(array(
+            'error' => 0,
+            'url' => $oAuth->getLoginUrl()
+        ));
+    } catch (\Exception $e) {
+        \App\Response::json_response(array(
+            'error' => $e->getCode(),
+            'message' => $e->getMessage(),
+        ));
+    }
+});
+
+/**
+* Return the Spotify user profile currently authenticated.
+*/
+$app->get('/api/get_user', function () use($app) {
+    $return = array();
+    try {
+        $spotify = new \App\Spotify(
+            \App\Config::get('spotify.client_id'),
+            \App\Config::get('spotify.client_secret')
+        );
+        $return = array(
+            'error' => 0,
+            'user' => $spotify->getUserProfil()
+        );
+    } catch (\Exception $e) {
+        $return = array(
+            'error' => $e->getCode(),
+            'message' => $e->getMessage(),
+        );
+    }
+    \App\Response::json_response($return);
+});
+
+/**
+* Retrieve spotify playlists for a lgged in account.
+*/
+$app->get('/api/get_playlist', function () use ($app) {
+    $return = array();
+    try {
+        $spotify = new \App\Spotify(
+            \App\Config::get('spotify.client_id'),
+            \App\Config::get('spotify.client_secret')
+        );
+        $return = array(
+            'error' => 0,
+            'playlist' => $spotify->getPlaylistList()
+        );
+        \App\Response::json_response($return);
+    } catch (\Exception $e) {
+        $return = array(
+            'error' => $e->getCode(),
+            'message' => $e->getMessage(),
+        );
+        \App\Response::json_response($return);
+    }
+});
+
+/**
+* Get current authenticated user's Discover Playlist from Spotify.
+*/
+$app->get('/api/find_discover_playlist', function () use ($app) {
+    try {
+        $spotify = new \App\Spotify(
+            \App\Config::get('spotify.client_id'),
+            \App\Config::get('spotify.client_secret')
+        );
+        $playlist = $spotify->getDiscoverPlaylist();
+        $return = array(
+            'error' => 0,
+            'playlist_id' => $playlist->id
+        );
+        \App\Response::json_response($return);
+    } catch (\Exception $e) {
+        $return = array(
+            'error' => $e->getCode(),
+            'message' => $e->getMessage(),
+        );
+        \App\Response::json_response($return);
+    }
+});
+
+/**
+* Create a playlist into the currently authenticated Spotify user profile.
+*/
+$app->get('/api/create_playlist', function () use ($app) {
+    try {
+        $now = new \DateTime();
+        $playlist_name = 'Spoty week '.$now->format('Y-W');
+
+        $spotify = new \App\Spotify(
+            \App\Config::get('spotify.client_id'),
+            \App\Config::get('spotify.client_secret')
+        );
+        $playlist = $spotify->createPlaylist($playlist_name);
+        $return = array(
+            'error' => 0,
+            'playlist' => $playlist
+        );
+        \App\Response::json_response($return);
+    } catch (\Exception $e) {
+        $return = array(
+            'error' => $e->getCode(),
+            'message' => $e->getMessage(),
+        );
+        \App\Response::json_response($return);
+    }
+});
+
+/**
+* Copy tracks from a playlist to another one.
+*/
+$app->get('/api/copy_playlist', function () use ($app) {
+    try {
+        $src_playlist_id = $app->request->get('src_playlist_id');
+        $dest_playlist_id = $app->request->get('dest_playlist_id');
+        $spotify = new \App\Spotify(
+            \App\Config::get('spotify.client_id'),
+            \App\Config::get('spotify.client_secret')
+        );
+        $result = $spotify->copyPlaylist($src_playlist_id, $dest_playlist_id);
+
+        if ($result === true) {
+            $return = array(
+                'error' => 0
+            );
+        } else {
+            $return = array(
+                'error' => \App\Spotify::SPOTIFY_DISCOVER_PLAYLIST_COPY_WENT_WRONG
+            );
+        }
+
+        \App\Response::json_response($return);
+    } catch (\Exception $e) {
+        $return = array(
+            'error' => $e->getCode(),
+            'message' => $e->getMessage(),
+        );
+        \App\Response::json_response($return);
+    }
+
 });
 
 $app->run();

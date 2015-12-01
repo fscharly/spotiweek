@@ -1,15 +1,15 @@
-body {
-    background-color: #000000;
-}
-
-.head {
-    color: #FFFFFF;
-}
-
 .panel-disable {
     opacity: 0.4;
 }
 
 .green-spotify-text {
     color: #2FD566;
+}
+
+.table-playlist {
+    margin-bottom: 0;
+}
+
+.pagination-playlist {
+    margin: 20px 0 0 0;
 }
