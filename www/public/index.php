@@ -38,7 +38,7 @@ $app->get('/bye', function () use ($app) {
 $app->get('/authentification/callback', function() use ($app) {
     if ($app->request->get('code', false)) {
         try {
-            \App\OAuth::getInstance(
+            \App\Oauth::getInstance(
                 \App\Config::get('spotify.client_id'),
                 \App\Config::get('spotify.client_secret')
             )->login($app->request->get('code'));
